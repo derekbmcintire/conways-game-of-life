@@ -8,8 +8,10 @@
      @neighbors = []
    end
 
-   def get_neighbors(cell)
-     @board.each do ||
+   def get_neighbors(cell_arr)
+     @board.each do |arr|
+       arr.each do ||
+       end
      end
    end
 
