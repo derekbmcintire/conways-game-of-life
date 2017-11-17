@@ -12,7 +12,7 @@
    def get_neighbors(cell)
      @board.length.times do |i|
        current_cell = [i]
-       arr.length.times do |j|
+       @board[i].length.times do |j|
          current_cell.push(j)
          @neighbors.push(current_cell)
        end
