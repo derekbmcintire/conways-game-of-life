@@ -8,9 +8,11 @@
      @neighbors = []
    end
 
-   def get_neighbors(cell_arr)
-     @board.each do |arr|
-       arr.each do ||
+   # cell is an array like [1,0]
+   def get_neighbors(cell)
+     @board.length.times do |i|
+       arr.length.times do |j|
+
        end
      end
    end
