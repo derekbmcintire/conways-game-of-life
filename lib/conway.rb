@@ -5,10 +5,12 @@
 
    def initialize(size)
      @board = Array.new(size, Array.new(size, false))
+     @neighbors = []
    end
 
    def get_neighbors(cell)
-     @neighbors = []
+     @board.each do ||
+     end
    end
 
  end
