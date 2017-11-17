@@ -17,6 +17,7 @@
          @neighbors.push(current_cell)
        end
      end
+     @neighbors
    end
 
  end
