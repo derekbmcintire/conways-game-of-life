@@ -1,19 +1,37 @@
-# frozen_string_literal: true
- #hi
- class Board
-   attr_accessor :board, :neighbors
-   def initialize(size)
-     @board = Array.new(size, Array.new(size, false))
-     @neighbors = []
-   end
-   # cell is an array like [1,0]
-   def get_neighbors(cell)
-     a = cell[0]
-     b = cell[1]
-     @neighbors = [
-       [(a+1),b], [(a+1),(b+1)], [(a+1), (b-1)], [(a-1), b], [(a-1), (b+1)],
-       [(a-1), (b-1)], [a, (b-1)], [a, (b+1)]
-     ]
-     @neighbors
-   end
- end
+  # frozen_string_literal: true
+
+  # hi
+  class Board
+    attr_accessor :board, :neighbors
+
+    # creates a board of any size
+    def initialize(size)
+      @board = Array.new(size, Array.new(size, false))
+      @neighbors = []
+    end
+
+  end
+
+  class Cell < Board
+    attr_accessor :row, :index
+
+    def initialize(row, index)
+      @row = row
+      @index = index
+    end
+
+    def get_unfiltered_neighbors
+      @neighbors = [
+        [(@row + 1), @index], [(@row + 1), (@index + 1)],
+        [(@row + 1), (@index - 1)], [(@row - 1), @index],
+        [(@row - 1), (@index + 1)], [(@row - 1), (@index - 1)],
+        [@row, (@index - 1)], [@row, (@index + 1)]
+      ]
+    end
+
+    def get_neighbors
+      get_unfiltered_neighbors
+      @neighbors.reject { |arr| arr.include?(-1) }
+    end
+
+  end
