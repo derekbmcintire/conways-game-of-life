@@ -2,26 +2,37 @@
 
   # hi
   class Board
-    attr_accessor :board, :new_board, :neighbors, :row, :index, :current_cell, :size
+    attr_accessor :board, :new_board, :neighbors, :living, :row, :index, :current_cell, :size, :flat_board
 
     # creates a board of any size
     def initialize(size)
       @size = size
       @board = []
-      (size * size).times do
-      @board.push(false)
-    end
-      @board = @board.each_slice(size).to_a
-      @new_board = @board
+      @new_board = []
       @neighbors = []
+      @flat_board = []
     end
 
+    def create_board
+      (size * size).times do
+      board.push(0)
+      end
+      @board = board.each_slice(size).to_a
+      @size.times do |i|
+      @size.times do |j|
+        flat_board.push([i, j])
+      end
+      end
+    end
+
+    # defines row and index of current cell, sets current_cell to value
     def get_cell(row, index)
       @row = row
       @index = index
-      @current_cell = @board[@row][@index]
+      @current_cell = @new_board[@row][@index]
     end
 
+    # gets coords for all potential neighbors
     def unfiltered_neighbors
       @neighbors = [
         [(@row + 1), @index], [(@row + 1), (@index + 1)],
@@ -31,6 +42,7 @@
       ]
     end
 
+    # rejects neighbors that don't exist
     def reject_neighbors
       unfiltered_neighbors
       @neighbors = @neighbors.reject { |arr|
@@ -38,52 +50,53 @@
       }
     end
 
+    # selects only neighbors that are alive
     def live_neighbors
       reject_neighbors
-      @neighbors.select { |n| board[n[0]][n[1]] }
+      @living = @neighbors.select { |n| @new_board[n[0]][n[1]] == 1 }
     end
 
+    # checks if a cell should be changed
     def check_change(row, index)
       get_cell(row, index)
       live_neighbors
-      if @current_cell == true
+      if @current_cell == 1
         true_change
       else
         false_change
       end
-      @board = @new_board
       @board
     end
 
+    # looks at a living cell and changes if needed
     def true_change
-      return unless live_neighbors.length < 2 || live_neighbors.length > 3
-      @new_board[@row][@index] = false
+      return unless @living.length < 2 || @living.length > 3
+      @board[@row][@index] = 0
     end
 
+    # looks at a dead cell and changes if needed
     def false_change
-      return unless live_neighbors.length == 3
-      @new_board[@row][@index] = true
+      return unless @living.length == 3
+      @board[@row][@index] = 1
     end
 
+    # scans the board and checks each cell
     def map_board
-      flat_board = []
-      @size.times do |i|
-        @size.times do |j|
-          flat_board.push([i, j])
-        end
-      end
-
-      flat_board.each do |cell|
+      @new_board = @board.map(&:dup)
+      @flat_board.each do |cell|
         check_change(cell[0], cell[1])
       end
       @board
     end
+
+    # manually changes a cells value
+    def change_cell(row, index, value)
+      @board[row][index] = value
+    end
   end
 
-  # x.board[2][0] = true
-  # x.board[2][0] = true
-  # x.board[1][4] = true
-  # x.board[0][2] = true
-  # x.board[4][1] = true
-  # x.board[4][2] = true
-  # x.board[3][3] = true
+  # x.change_cell(3,5,1)
+  # x.change_cell(2,5,1)
+  # x.change_cell(3,6,1)
+  # x.change_cell(4,5,1)
+  # x.change_cell(4,4,1)
