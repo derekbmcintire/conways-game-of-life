@@ -16,10 +16,6 @@
       @neighbors = []
     end
 
-    def change_cell(row, index, value)
-      @board[row][index] = value
-    end
-
     def get_cell(row, index)
       @row = row
       @index = index
@@ -76,25 +72,18 @@
           flat_board.push([i, j])
         end
       end
-      flat_board.map { |cell| check_change(cell[0], cell[1]) }
+
+      flat_board.each do |cell|
+        check_change(cell[0], cell[1])
+      end
       @board
     end
   end
 
-  # if cell is true
-  # if live_neighbors.length is less than 2 cell is false
-  # if live_neighbors.length is more than 3 cell is false
-  # if cell is false
-  # if live_neighbors.length is 3 cell is true
-  # else cell stays the same
-
-  # a = Board.new(5)
-  # x.board[2][3] = true
   # x.board[2][0] = true
-  # x.board[0][4] = true
-  # x.board[0][3] = true
+  # x.board[2][0] = true
+  # x.board[1][4] = true
+  # x.board[0][2] = true
   # x.board[4][1] = true
-  # x.board[4][3] = true
+  # x.board[4][2] = true
   # x.board[3][3] = true
-  #
-  # puts x.board
