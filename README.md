@@ -5,7 +5,7 @@ A commandline version of Conway's Game of Life.
 ## How to Play
 
 ### Prerequisites
-- Download or cloan this repository.
+- Download or clone this repository.
 
 ### First, require lib/conway.rb into pry
 ```rb
