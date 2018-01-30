@@ -1,10 +1,10 @@
   # frozen_string_literal: true
 
-  # hi
+  # define Board Class
   class Board
     attr_accessor :board, :new_board, :neighbors, :living, :row, :index, :current_cell, :size, :flat_board
 
-    # creates a board of any size
+    # initializes an instance of the Board class, takes size as a parameter
     def initialize(size)
       @size = size
       @board = []
@@ -13,19 +13,23 @@
       @flat_board = []
     end
 
+    # creates a new game board with a length and height of (size)
     def create_board
+      # pushes a 0 into the @board array for each cell
       (size * size).times do
       board.push(0)
       end
+      # slices @board into arrays that represent the rows of the board
       @board = board.each_slice(size).to_a
-      @size.times do |i|
-      @size.times do |j|
-        flat_board.push([i, j])
+      # creates a flat board where each cell is represented by an array with x and y coordinates
+      @size.times do |x|
+      @size.times do |y|
+        flat_board.push([x, y])
       end
       end
     end
 
-    # defines row and index of current cell, sets current_cell to value
+    # defines row and index of current cell, sets current_cell to value of that cell
     def get_cell(row, index)
       @row = row
       @index = index
