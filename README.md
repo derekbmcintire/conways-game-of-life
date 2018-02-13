@@ -19,9 +19,10 @@ Then create a new instance of the Board class and pass it a board size.
 ```rb
 x= Board.new(16)
 ```
-### Then create your board by calling the .create_board method.
+
+### View your board by calling the .board method.
 ```rb
-x.create_board
+x.board
 ```
 
 ### Use the .change_cell method to create some initial living cells
@@ -44,10 +45,7 @@ x.change_cell(15,3,1)
 x.change_cell(15,5,1)
 ```
 
-### View your board by calling the .board method.
-```rb
-x.board
-```
+
 
 ### Each living cell is represented by the number 1, and each dead cell is represented by the number 0. Your board should look like this:
 ```rb
