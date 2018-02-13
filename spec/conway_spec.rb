@@ -4,7 +4,6 @@ require_relative '../lib/conway'
 RSpec.describe Board do
   before :all do
     @my_board = Board.new(16)
-    @my_board.create_board
   end
 
   describe 'Create Board' do

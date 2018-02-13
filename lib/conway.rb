@@ -7,26 +7,39 @@
     # initializes an instance of the Board class, takes size as a parameter
     def initialize(size)
       @size = size
-      @board = []
-      @new_board = []
-      @neighbors = []
-      @flat_board = []
+      create_empty_arrays
+      create_board
     end
 
-    # creates a new game board with a length and height of (size)
-    def create_board
-      # pushes a 0 into the @board array for each cell
+    # instantiates attributes with empty arrays
+    def create_empty_arrays
+      @board = []
+      @new_board = []
+      @flat_board = []
+      @neightbors = []
+    end
+
+    # pushes 0's into :board and then slices it into :size arrays
+    def push_and_slice
       (size * size).times do
       board.push(0)
-      end
-      # slices @board into arrays that represent the rows of the board
+    end
       @board = board.each_slice(size).to_a
-      # creates a flat board where each cell is represented by an array with x and y coordinates
+    end
+
+    # creates a flat board where each cell is represented by an array with x and y coordinates
+    def create_coords
       @size.times do |x|
       @size.times do |y|
         flat_board.push([x, y])
       end
       end
+    end
+
+    # creates a new game board with a length and height of (size)
+    def create_board
+      push_and_slice
+      create_coords
     end
 
     # defines row and index of current cell, sets current_cell to value of that cell
@@ -60,15 +73,19 @@
       @living = @neighbors.select { |n| @new_board[n[0]][n[1]] == 1 }
     end
 
-    # checks if a cell should be changed
-    def check_change(row, index)
-      get_cell(row, index)
-      live_neighbors
+    def check_current_cell
       if @current_cell == 1
         true_change
       else
         false_change
       end
+    end
+
+    # checks if a cell should be changed
+    def check_change(row, index)
+      get_cell(row, index)
+      live_neighbors
+      check_current_cell
       @board
     end
 
@@ -98,20 +115,3 @@
       @board[row][index] = value
     end
   end
-
-  # x.change_cell(3,5,1)
-  # x.change_cell(2,5,1)
-  # x.change_cell(3,6,1)
-  # x.change_cell(4,5,1)
-  # x.change_cell(12,10,1)
-  # x.change_cell(12,8,1)
-  # x.change_cell(13,8,1)
-  # x.change_cell(3,9,1)
-  # x.change_cell(3,10,1)
-  # x.change_cell(4,15,1)
-  # x.change_cell(5,14,1)
-  # x.change_cell(5,12,1)
-  # x.change_cell(13,1,1)
-  # x.change_cell(14,2,1)
-  # x.change_cell(15,3,1)
-  # x.change_cell(15,5,1)
