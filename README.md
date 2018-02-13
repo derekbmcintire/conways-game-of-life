@@ -15,7 +15,7 @@ pry
 require_relative('lib/conway.rb')
 ```
 
-Then create a new instance of the Board class and pass it a board size.
+### Then create a new instance of the Board class and pass it a board size.
 ```rb
 x= Board.new(16)
 ```
